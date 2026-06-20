@@ -1,22 +1,9 @@
-# Hi there, I'm Bijaya Khadka! 👋
+## 🚀 Tech Stack
 
-I am a passionate web developer with a strong focus on frontend technologies and a dedicated enthusiast for open-source development. 
-
-## 🚀 About Me
-- 🔭 I’m currently looking to contribute to exciting open-source projects.
-- 🌱 I’m continually refining my web design and deployment strategies.
-- 💬 Ask me about frontend basics, structural semantic markup, or getting started with web development.
-
-## 🛠️ Tech Stack & Skills
-- **Languages & Frontend:** HTML5, CSS3
-- **Interests:** Open Source Contribution, UI Design, Version Control (Git)
-
-## 📊 GitHub Stats
-![Bijaya's GitHub Stats](https://vercel.app)
-![Top Langs](https://vercel.app)
-
-## 🤝 Connect With Me
-Feel free to reach out if you want to collaborate on an open-source project or just talk web development!
-
-- **Email:** [khadkabijaya@gmail.com](mailto:khadkabijaya@gmail.com)
-- **LinkedIn:** [Bijaya Khadka](https://linkedin.com)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
