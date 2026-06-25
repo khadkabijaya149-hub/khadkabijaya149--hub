@@ -54,7 +54,22 @@
 
     <h2>लाइभ रेट (Live Rates)</h2>
     <div id="market-container">
-        <p style="text-align: center; color: #9096a2;">लोड हुँदैछ...</p>
+        <!-- सुरुमै डिफाल्ट डेटा देखिनेछ, लोड हुँदैछ भनेर अड्किँदैन -->
+        <div class="market-row" style="padding: 10px; margin-bottom: 5px; border-bottom: 1px solid #232836;">
+            <div style="font-weight:bold;">Gold (सुन)</div>
+            <div class="live-price">$2,345.50</div>
+            <button class="btn-trade" onclick="initiateTrade('gold')">Trade</button>
+        </div>
+        <div class="market-row" style="padding: 10px; margin-bottom: 5px; border-bottom: 1px solid #232836;">
+            <div style="font-weight:bold;">Bitcoin (BTC)</div>
+            <div class="live-price">$64,200.00</div>
+            <button class="btn-trade" onclick="initiateTrade('bitcoin')">Trade</button>
+        </div>
+        <div class="market-row" style="padding: 10px; margin-bottom: 5px; border-bottom: 1px solid #232836;">
+            <div style="font-weight:bold;">Ethereum (ETH)</div>
+            <div class="live-price">$3,450.00</div>
+            <button class="btn-trade" onclick="initiateTrade('ethereum')">Trade</button>
+        </div>
     </div>
 
     <div class="trade-panel" id="trading-window">
@@ -89,7 +104,10 @@
     </div>
 
     <h2>तपाईंको होल्डिङ (Portfolio)</h2>
-    <div class="portfolio-box" id="portfolio-container">लोड हुँदैछ...</div>
+    <div class="portfolio-box" id="portfolio-container">
+        <div style="margin-bottom:10px; color:#02c076;"><strong>[भर्चुअल सम्पत्ति]</strong> Gold: 0.0000 OZ | BTC: 0.0000 | ETH: 0.0000</div>
+        <div style="color:#ffbc00;"><strong>[वास्तविक सम्पत्ति]</strong> Gold: 0.0000 OZ | BTC: 0.0000 | ETH: 0.0000</div>
+    </div>
 </div>
 
 <script>
@@ -102,12 +120,13 @@
     let currentMarketPrices = { gold: 2345.50, bitcoin: 64200.00, ethereum: 3450.00 };
     let selectedAsset = '';
 
-    // तपाईंको सही नम्बर यहाँ राखिएको छ
+    // तपाईंको सही नम्बर यहाँ सेट गरिएको छ
     const myWhatsAppNumber = "9779749719489"; 
 
     function refreshMarketPrices() {
-        currentMarketPrices.bitcoin += (Math.random() - 0.5) * 40;
-        currentMarketPrices.ethereum += (Math.random() - 0.5) * 4;
+        // बजार मूल्यहरू आफैँ हलचल गराउने बलियो फङ्सन (यसले गर्दा कहिल्यै लोड हुँदैछ भनेर अड्किँदैन)
+        currentMarketPrices.bitcoin = parseFloat((currentMarketPrices.bitcoin + (Math.random() - 0.5) * 40).toFixed(2));
+        currentMarketPrices.ethereum = parseFloat((currentMarketPrices.ethereum + (Math.random() - 0.5) * 4).toFixed(2));
         currentMarketPrices.gold = parseFloat((currentMarketPrices.gold + (Math.random() - 0.5) * 2).toFixed(2));
         
         renderMarketUI();
@@ -156,32 +175,3 @@
     }
 
     function processOrder(actionType) {
-        const usdValue = parseFloat(document.getElementById('trade-usd-amount').value);
-        const wallet = document.getElementById('wallet-type').value;
-
-        if (isNaN(usdValue) || usdValue <= 0) { alert("सही रकम राख्नुहोस्!"); return; }
-
-        const currentAssetPrice = currentMarketPrices[selectedAsset];
-        const calculatedUnits = usdValue / currentAssetPrice;
-
-        if (actionType === 'buy') {
-            if (wallet === 'virtual' && vBalance >= usdValue) {
-                vBalance -= usdValue;
-                assets.virtual[selectedAsset] += calculatedUnits;
-                alert("भर्चुअल ब्यालेन्सबाट खरिद भयो!");
-            } else if (wallet === 'real' && rBalance >= usdValue) {
-                rBalance -= usdValue;
-                assets.real[selectedAsset] += calculatedUnits;
-                alert("बधाई छ! वास्तविक पैसाबाट रियल खरिद भयो!");
-            } else {
-                alert("तपाईंसँग पर्याप्त ब्यालेन्स छैन!");
-                return;
-            }
-        } else if (actionType === 'sell') {
-            if (wallet === 'virtual' && assets.virtual[selectedAsset] >= calculatedUnits) {
-                vBalance += usdValue;
-                assets.virtual[selectedAsset] -= calculatedUnits;
-                alert("भर्चुअल एसेट बिक्री भयो!");
-            } else if (wallet === 'real' && assets.real[selectedAsset] >= calculatedUnits) {
-                rBalance += usdValue;
-                assets.real[selectedAsset] -= calculatedUnits;
