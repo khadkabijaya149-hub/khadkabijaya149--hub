@@ -111,13 +111,17 @@
                 const fetchedData = await apiResponse.json();
                 currentMarketPrices.bitcoin = fetchedData.bitcoin.usd;
                 currentMarketPrices.ethereum = fetchedData.ethereum.usd;
+            } else {
+                currentMarketPrices.bitcoin += (Math.random() - 0.5) * 50;
+                currentMarketPrices.ethereum += (Math.random() - 0.5) * 5;
             }
-            currentMarketPrices.gold = parseFloat((currentMarketPrices.gold + (Math.random() - 0.5) * 3).toFixed(2));
-            renderMarketUI();
-            renderPortfolioUI();
         } catch (err) {
-            renderMarketUI();
+            currentMarketPrices.bitcoin += (Math.random() - 0.5) * 40;
+            currentMarketPrices.ethereum += (Math.random() - 0.5) * 4;
         }
+        currentMarketPrices.gold = parseFloat((currentMarketPrices.gold + (Math.random() - 0.5) * 3).toFixed(2));
+        renderMarketUI();
+        renderPortfolioUI();
     }
 
     function renderMarketUI() {
@@ -131,7 +135,7 @@
         container.innerHTML = assetList.map(asset => `
             <div class="market-row" style="padding: 10px; margin-bottom: 5px; border-bottom: 1px solid #232836;">
                 <div style="font-weight:bold;">${asset.name}</div>
-                <div class="live-price">$${asset.price.toLocaleString()}</div>
+                <div class="live-price">$${asset.price.toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
                 <button class="btn-trade" onclick="initiateTrade('${asset.id}')">Trade</button>
             </div>
         `).join('');
@@ -156,7 +160,7 @@
         const amt = document.getElementById('deposit-amount').value;
         if(!amt) { alert("कृपया रकम हाल्नुहोस्"); return; }
         
-        const message = `नमस्ते सर, म तपाईंको वेबसाइट मार्फत वास्तविक पैसा इन्भेस्ट गर्न चाहन्छु। मैले जम्मा गर्न खोजेको रकम: ${amt} हो। मलाई पेमेन्ट क्युआर वा बैंक खाता पठाइदिनुहोस्।`;
+        const message = `नमस्ते सर, म तपाईंको वेबसाइट मार्फत वास्तविक पैसा इन्भेस्ट गर्न चाहन्छु। मैले जम्मा करना खोजेको रकम: ${amt} हो। मलाई पेमेन्ट क्युआर वा बैंक खाता पठाइदिनुहोस्।`;
         const whatsappUrl = `https://wa.me{myWhatsAppNumber}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
     }
@@ -180,10 +184,3 @@
                 assets.real[selectedAsset] += calculatedUnits;
                 alert("बधाई छ! वास्तविक पैसाबाट रियल खरिद भयो!");
             } else {
-                alert("तपाईंसँग पर्याप्त ब्यालेन्स छैन!");
-                return;
-            }
-        } else if (actionType === 'sell') {
-            if (wallet === 'virtual' && assets.virtual[selectedAsset] >= calculatedUnits) {
-                vBalance += usdValue;
-                assets.virtual[selectedAsset] -= calculatedUnits;
